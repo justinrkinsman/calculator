@@ -47,8 +47,12 @@ function operate(operand1, operator, operand2){
     }
 }
 
-operate(1, '+', 2)
-operate(4, '-', 2)
-operate(5, "*", 5)
-operate(12, '/', 4)
-operate(14, 'l', 15)
+let buttons = document.querySelectorAll('button')
+function modifyDisplay() {
+    const display = document.querySelector('#display')
+    for (let i = 0; i < buttons.length; i++) {
+        console.log(buttons[i].innerHTML);
+}
+}
+
+document.addEventListener('click', modifyDisplay)
