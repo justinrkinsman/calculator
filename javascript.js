@@ -48,11 +48,12 @@ function operate(operand1, operator, operand2){
 }
 
 let buttons = document.querySelectorAll('button')
-function modifyDisplay() {
-    const display = document.querySelector('#display')
-    for (let i = 0; i < buttons.length; i++) {
-        console.log(buttons[i].innerHTML);
-}
-}
+for (const button of buttons) {
+    button.addEventListener('click', () => {
+    modifyDisplay(button.textContent)
+})}
 
-document.addEventListener('click', modifyDisplay)
+function modifyDisplay(input) {
+    const display = document.querySelector('#display')
+    display.textContent = input
+}
