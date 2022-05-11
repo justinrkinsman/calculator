@@ -33,7 +33,27 @@ function divide() {
     console.log(quotient)
 }
 
-add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+function operate(operand1, operator, operand2){
+    if (operator == '+') {
+        add(operand1, operand2)
+    }else if (operator == '-') {
+        subtract(operand1, operand2)
+    }else if (operator == '*') {
+        multiply(operand1, operand2)
+    }else if (operator == '/') {
+        divide(operand1, operand2)
+    }else{
+        console.log("You can't do that")
+    }
+}
+
+operate(1, '+', 2)
+operate(4, '-', 2)
+operate(5, "*", 5)
+operate(12, '/', 4)
+operate(14, 'l', 15)
+
+/*add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 subtract(100, 10, 10)
 multiply(4, 3, 2, 2,)
-divide(60, 3, 2)
+divide(60, 3, 2)*/
