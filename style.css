@@ -1,5 +1,36 @@
+#calcBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #display {
     display: flex;
     background-color: gray;
-    width: 200px;
+    width: 250px;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 75px;
+    font-size: 50px;
+}
+
+#operatorBtns {
+    display: flex;
+    flex-direction: column;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+button {
+    width: 50px;
+    height: 50px;
+}
+
+#clrBtn {
+    display: flex;
+    align-items: flex-end;
 }
