@@ -52,8 +52,3 @@ operate(4, '-', 2)
 operate(5, "*", 5)
 operate(12, '/', 4)
 operate(14, 'l', 15)
-
-/*add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-subtract(100, 10, 10)
-multiply(4, 3, 2, 2,)
-divide(60, 3, 2)*/
