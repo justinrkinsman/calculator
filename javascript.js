@@ -59,6 +59,8 @@ for (const button of operand) {
         modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`)
     }else if (button.textContent == 'Clear'){
         modifyDisplayLarge('0'), modifyDisplayMini('')
+    }else if (button.textContent == '='){
+        modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), modifyDisplayLarge(), operate()
     }
 })}
 
@@ -72,9 +74,52 @@ function modifyDisplayMini(input) {
     displayMini.textContent = input
 }
 
+function operate(){
+    let operand1 = displayMini.textContent.substr(0, 1)
+    let operand2 = displayMini.textContent.substr(4, 1)
+    let operator = displayMini.textContent.substr(2, 1)
+    if (operator == "+"){
+        add(operand1, operand2)
+    }else if (operator == '-'){
+        subtract(operand1, operand2)
+    }else if (operator == 'x'){
+        multiply(operand1, operand2)
+    }else if (operator == '/'){
+        divide(operand1, operand2)
+    }
+}
 
+function add(operand1, operand2){
+    modifyDisplayLarge(parseInt(operand1) + parseInt(operand2))
+}
 
+function subtract(operand1, operand2){
+    modifyDisplayLarge(parseInt(operand1) - parseInt(operand2))
+}
 
+function divide(operand1, operand2){
+    modifyDisplayLarge(parseInt(operand1) / parseInt(operand2))
+}
+
+function multiply(operand1, operand2){
+    modifyDisplayLarge(parseInt(operand1) * parseInt(operand2))
+}
+    
+
+/*
+function operate(operand1, operator, operand2){
+    if (operator == '+') {
+        add(operand1, operand2)
+    }else if (operator == '-') {
+        subtract(operand1, operand2)
+    }else if (operator == '*') {
+        multiply(operand1, operand2)
+    }else if (operator == '/') {
+        divide(operand1, operand2)
+    }else{
+        console.log("You can't do that")
+    }
+}*/
 
 
 /*let operators = document.querySelectorAll('#operatorBtns')
