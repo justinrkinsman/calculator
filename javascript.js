@@ -1,4 +1,4 @@
-function add() {
+/*function add() {
     let sum = 0;
     for (let i = 0; i < arguments.length; i++) {
         sum += arguments[i];
@@ -45,15 +45,40 @@ function operate(operand1, operator, operand2){
     }else{
         console.log("You can't do that")
     }
-}
+}*/
 
-let buttons = document.querySelectorAll('button')
-for (const button of buttons) {
+let operand = document.querySelectorAll('button')
+for (const button of operand) {
     button.addEventListener('click', () => {
-    modifyDisplay(button.textContent)
+    if (button.textContent != 'Clear') {
+        modifyDisplayLarge(button.textContent)
+    }else{
+        modifyDisplayLarge('') && modifyDisplayMini('')
+    }
 })}
 
-function modifyDisplay(input) {
-    const display = document.querySelector('#display')
-    display.textContent = input
+let operators = document.querySelectorAll('#operatorBtns')
+for (const button of operators) {
+    button.addEventListener('click', () => {
+    if ((button.textContent === '+') || (button.textContent === '-') || (button.textContent === '*') || 
+        (button.textContent === '/')){ 
+        modifyDisplayMini(button.textContent)
+    }else{
+        modifyDisplayMini('')
+    }
+})}
+
+function modifyDisplayLarge(input) {
+    const displayLarge = document.querySelector('#displayLarge')
+    displayLarge.textContent = input
+    return(input)
 }
+
+function modifyDisplayMini(input) {
+    const displayMini = document.querySelector('#displayMini')
+    displayMini.textContent = input
+    return(input)
+}
+/*let operator = button.textContent
+    let operand1 = button.textContent
+    let operand2 = button.textContent*/
