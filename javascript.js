@@ -1,6 +1,5 @@
 let operand = document.querySelectorAll('button');
-let currentDisplay = displayLarge.textContent;//once you figure out how to display multi-digit numbers, put them in an array
-                                                //[0] = first operand   [1] = operator   [2] = second operand
+
 function buttonClick() {
     let newDigits = []
 for (const button of operand) {
@@ -9,30 +8,56 @@ for (const button of operand) {
         (button.textContent == '4') || (button.textContent == '5') || (button.textContent == '6') || 
         (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9') ||
         (button.textContent == '0')){
-        newDigits.push(button.textContent), modifyDisplayLarge(newDigits.join('')), console.log(newDigits)
+        newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), console.log(newDigits)
     }else if ((button.textContent == '+') || (button.textContent == '-') || (button.textContent == 'x') || 
                 (button.textContent == '/')){
+            if (displayMini.textContent.includes('+')){
+                if (displayMini.textContent.includes('+') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    add((displayLarge.textContent), (displayMini.textContent))
+                }
+            }else if (displayMini.textContent.includes('-')){
+                if (displayMini.textContent.includes('-') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    subtract((displayMini.textContent), displayLarge.textContent)
+                }
+            }else if (displayMini.textContent.includes('/')){
+                if (displayMini.textContent.includes('/') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    divide((displayMini.textContent), (displayLarge.textContent))
+                }
+            }else if (displayMini.textContent.includes('x')){
+                if (displayMini.textContent.includes('x') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    multiply((displayLarge.textContent), displayMini.textContent)
+                }
+            }
+
         modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`), operand1(), operator(), newDigits = []
     }else if (button.textContent == 'Clear'){
         modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = []
-    }else if (button.textContent == '='){
+    }else if ((button.textContent == '=')){
+        if (displayMini.textContent.includes('=')){
+            console.log('hello')
+        }
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), newDigits = []
     }
 })}}
 
-function multiDigit() {
-    let firstDigit = displayLarge.textContent;
-}
-
 function modifyDisplayLarge(input) {
     const displayLarge = document.querySelector('#displayLarge')
     displayLarge.textContent = input
+    if (input.length > 9) input = input.substring(0, 9)
 }
 
 function modifyDisplayMini(input) {
     const displayMini = document.querySelector('#displayMini')
     displayMini.textContent = input
-}
+    }
 
 function operate(){
     let array = displayMini.textContent.split(' ')
@@ -62,7 +87,8 @@ function divide(operand1, operand2){
     if (operand2 == '0'){
         modifyDisplayLarge('lmao')
     }else{
-        modifyDisplayLarge(parseInt(operand1) / parseInt(operand2))
+        //modifyDisplayLarge((parseInt(operand1) / parseInt(operand2)))
+        modifyDisplayLarge((Math.round(parseInt(operand1) / parseInt(operand2) * 100) / 100 ))
     }
 }
 
