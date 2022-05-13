@@ -8,7 +8,7 @@ for (const button of operand) {
         (button.textContent == '4') || (button.textContent == '5') || (button.textContent == '6') || 
         (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9') ||
         (button.textContent == '0') || (button.textContent == '.')){
-            if (displayLarge.textContent.includes('.')){
+            if (newDigits.includes('.')){
                 disableDecimal()
              }
                 newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), console.log(newDigits)
@@ -40,16 +40,17 @@ for (const button of operand) {
                 }
             }
         modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`), operand1(), operator(), 
-        newDigits = [], enableEquals()
+        newDigits = [], enableEquals(), enableDecimal()
     }else if (button.textContent == 'Clear'){
-        modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = [], enableEquals()
+        modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = [], enableEquals(),
+        enableDecimal()
     }else if ((button.textContent == '=')){
         if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
             (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
             button.disabled = true
         }else{
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
-        newDigits = [], button.disabled = true;
+        newDigits = [], button.disabled = true, enableDecimal()
     }
     }})}}
 
@@ -73,6 +74,13 @@ function disableDecimal(){
     for (const button of operand)
     if (button.textContent == '.'){
         button.disabled = true
+    }
+}
+
+function enableDecimal(){
+    for (const button of operand)
+    if (button.textContent == '.'){
+        button.disabled = false
     }
 }
 
