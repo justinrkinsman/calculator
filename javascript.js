@@ -1,14 +1,17 @@
 let operand = document.querySelectorAll('button');
 
 function buttonClick() {
-    let newDigits = []
+    let newDigits = [].slice(0, 10)
 for (const button of operand) {
     button.addEventListener('click', () => {
     if ((button.textContent == '1') || (button.textContent == '2') || (button.textContent == '3') || 
         (button.textContent == '4') || (button.textContent == '5') || (button.textContent == '6') || 
         (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9') ||
-        (button.textContent == '0')){
-        newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), console.log(newDigits)
+        (button.textContent == '0') || (button.textContent == '.')){
+            if (displayLarge.textContent.includes('.')){
+                disableDecimal()
+             }
+                newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), console.log(newDigits)
     }else if ((button.textContent == '+') || (button.textContent == '-') || (button.textContent == 'x') || 
                 (button.textContent == '/')){
             if (displayMini.textContent.includes('+')){
@@ -36,22 +39,41 @@ for (const button of operand) {
                     multiply((displayLarge.textContent), displayMini.textContent)
                 }
             }
-
-        modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`), operand1(), operator(), newDigits = []
+        modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`), operand1(), operator(), 
+        newDigits = [], enableEquals()
     }else if (button.textContent == 'Clear'){
-        modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = []
+        modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = [], enableEquals()
     }else if ((button.textContent == '=')){
-        if (displayMini.textContent.includes('=')){
-            console.log('hello')
-        }
-        modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), newDigits = []
+        if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
+            (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
+            button.disabled = true
+        }else{
+        modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
+        newDigits = [], button.disabled = true;
     }
-})}}
+    }})}}
 
 function modifyDisplayLarge(input) {
     const displayLarge = document.querySelector('#displayLarge')
-    displayLarge.textContent = input
-    if (input.length > 9) input = input.substring(0, 9)
+    if (input.length > 10) {
+        input = input.slice(0, 10)
+    }else{
+        displayLarge.textContent = input
+    }
+}
+
+function enableEquals(){
+    for (const button of operand)
+    if (button.textContent == '='){
+        button.disabled = false
+    }
+}
+
+function disableDecimal(){
+    for (const button of operand)
+    if (button.textContent == '.'){
+        button.disabled = true
+    }
 }
 
 function modifyDisplayMini(input) {
