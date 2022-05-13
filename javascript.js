@@ -1,12 +1,13 @@
 let operand = document.querySelectorAll('button')
-let array = displayMini.textContent
-
+//let array = displayMini.textContent.split(' ')//once you figure out how to display multi-digit numbers, put them in an array
+                                                //[0] = first operand   [1] = operator   [2] = second operand
 function buttonClick() {
 for (const button of operand) {
     button.addEventListener('click', () => {
     if ((button.textContent == '1') || (button.textContent == '2') || (button.textContent == '3') || 
         (button.textContent == '4') || (button.textContent == '5') || (button.textContent == '6') || 
-        (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9')){
+        (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9') ||
+        (button.textContent == '0')){
         modifyDisplayLarge(button.textContent)
     }else if ((button.textContent == '+') || (button.textContent == '-') || (button.textContent == 'x') || 
                 (button.textContent == '/')){
@@ -15,7 +16,7 @@ for (const button of operand) {
         modifyDisplayLarge('0'), modifyDisplayMini('')
     }else if (button.textContent == '='){
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), 
-        modifyDisplayLarge(), operate(), operand2()
+        modifyDisplayLarge(), operate(), operand2(), console.log(displayMini.textContent.split(' '))
     }
 })}}
 
@@ -30,9 +31,10 @@ function modifyDisplayMini(input) {
 }
 
 function operate(){
-    let operand1 = displayMini.textContent.substr(0, 1)
-    let operand2 = displayMini.textContent.substr(4, 1)
-    let operator = displayMini.textContent.substr(2, 1)
+    let array = displayMini.textContent.split(' ')
+    let operand1 = array[0]
+    let operand2 = array[2]
+    let operator = array[1]
     if (operator == "+"){
         add(operand1, operand2)
     }else if (operator == '-'){
@@ -53,7 +55,11 @@ function subtract(operand1, operand2){
 }
 
 function divide(operand1, operand2){
-    modifyDisplayLarge(parseInt(operand1) / parseInt(operand2))
+    if (operand2 == '0'){
+        modifyDisplayLarge('lmao')
+    }else{
+        modifyDisplayLarge(parseInt(operand1) / parseInt(operand2))
+    }
 }
 
 function multiply(operand1, operand2){
@@ -95,7 +101,6 @@ function operate(operand1, operator, operand2){
         console.log("You can't do that")
     }
 }
-
 let operators = document.querySelectorAll('#operatorBtns')
 for (const button of operators) {
     button.addEventListener('click', () => {
@@ -106,11 +111,9 @@ for (const button of operators) {
         console.log('Hello')
     }
 })}
-
 let operator = button.textContent
     let operand1 = button.textContent
     let operand2 = button.textContent
-
     function add() {
     let sum = 0;
     for (let i = 0; i < arguments.length; i++) {
@@ -118,7 +121,6 @@ let operator = button.textContent
     }
     console.log(sum);
 }
-
 function subtract() {
     let difference = arguments[0];
     for (let i = 1; i < arguments.length; i++) {
@@ -126,7 +128,6 @@ function subtract() {
     }
     console.log(difference);
 }
-
 function multiply() {
     let product = 1;
     for (let i = 0; i < arguments.length; i++) {
@@ -134,7 +135,6 @@ function multiply() {
     }
     console.log(product)
 }
-
 function divide() {
     let quotient = arguments[0];
     for (let i = 1; i < arguments.length; i++) {
@@ -145,7 +145,6 @@ function divide() {
     }
     console.log(quotient)
 }
-
 function operate(operand1, operator, operand2){
     if (operator == '+') {
         add(operand1, operand2)
