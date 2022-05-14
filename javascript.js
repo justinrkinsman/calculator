@@ -9,9 +9,10 @@ for (const button of operand) {
         (button.textContent == '7') || (button.textContent == '8') || (button.textContent == '9') ||
         (button.textContent == '0') || (button.textContent == '.')){
             if (newDigits.includes('.')){
-                disableDecimal()
+                disableDecimal(), enableDelete()
              }
-                newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), console.log(newDigits)
+                newDigits.push(button.textContent), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), 
+                console.log(newDigits), enableDelete()
     }else if ((button.textContent == '+') || (button.textContent == '-') || (button.textContent == 'x') || 
                 (button.textContent == '/')){
             if (displayMini.textContent.includes('+')){
@@ -40,7 +41,7 @@ for (const button of operand) {
                 }
             }
         modifyDisplayMini(`${displayLarge.textContent} ${button.textContent}`), operand1(), operator(), 
-        newDigits = [], enableEquals(), enableDecimal()
+        newDigits = [], enableEquals(), enableDecimal(), disableDelete()
     }else if (button.textContent == 'Clear'){
         modifyDisplayLarge('0'), modifyDisplayMini(''), currentDisplay = '0', newDigits = [], enableEquals(),
         enableDecimal()
@@ -50,9 +51,12 @@ for (const button of operand) {
             button.disabled = true
         }else{
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
-        newDigits = [], button.disabled = true, enableDecimal()
+        newDigits = [], button.disabled = true, enableDecimal(), disableDelete()
+        }
+    }else if (button.textContent == 'Delete'){
+        modifyDisplayLarge(displayLarge.textContent.slice(0, -1)), newDigits.pop()
     }
-    }})}}
+    })}}
 
 function modifyDisplayLarge(input) {
     const displayLarge = document.querySelector('#displayLarge')
@@ -84,6 +88,20 @@ function enableDecimal(){
     }
 }
 
+function disableDelete(){
+    for (const button of operand)
+    if (button.textContent == 'Delete'){
+        button.disabled = true
+    }
+}
+
+function enableDelete(){
+    for (const button of operand)
+    if (button.textContent == 'Delete'){
+        button.disabled = false
+    }
+}
+
 function modifyDisplayMini(input) {
     const displayMini = document.querySelector('#displayMini')
     displayMini.textContent = input
@@ -106,24 +124,24 @@ function operate(){
 }
 
 function add(operand1, operand2){
-    modifyDisplayLarge(parseInt(operand1) + parseInt(operand2))
+    modifyDisplayLarge(parseFloat(operand1) + parseFloat(operand2))
 }
 
 function subtract(operand1, operand2){
-    modifyDisplayLarge(parseInt(operand1) - parseInt(operand2))
+    modifyDisplayLarge(parseFloat(operand1) - parseFloat(operand2))
 }
 
 function divide(operand1, operand2){
     if (operand2 == '0'){
         modifyDisplayLarge('lmao')
     }else{
-        //modifyDisplayLarge((parseInt(operand1) / parseInt(operand2)))
-        modifyDisplayLarge((Math.round(parseInt(operand1) / parseInt(operand2) * 100) / 100 ))
+        modifyDisplayLarge((parseFloat(operand1) / parseFloat(operand2)))
+        //modifyDisplayLarge((Math.round(parseInt(operand1) / parseInt(operand2) * 100) / 100 ))
     }
 }
 
 function multiply(operand1, operand2){
-    modifyDisplayLarge(parseInt(operand1) * parseInt(operand2))
+    modifyDisplayLarge(parseFloat(operand1) * parseFloat(operand2))
 }
 
 buttonClick()
@@ -131,7 +149,7 @@ buttonClick()
 function operand1() {
     let operand1 = (displayMini.textContent.charAt(displayMini.textContent.length - 1))
     if ((operand1 == '+') || (operand1 == "-") || (operand1 == 'x') || (operand1 == '/')){
-        console.log(displayMini.textContent.substring(0, displayMini.textContent.length - 1))
+        console.log(+(displayMini.textContent.substring(0, displayMini.textContent.length - 1)))
     }
 }
 
