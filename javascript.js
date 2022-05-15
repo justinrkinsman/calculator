@@ -188,7 +188,7 @@ function keyboardSupport(){
                 console.log(newDigits), enableDelete() 
         }else if ((code == "NumpadAdd") || (code == 'NumpadSubtract') || (code == 'Minus') || 
             (code == 'NumpadMultiply') || (name == '*') || (name == '/') || (name == '+') ||
-            (code == 'NumpadDivide')){
+            (code == 'NumpadDivide') || (name == 'x')){
             if (displayMini.textContent.includes('+')){
                 if (displayMini.textContent.includes('+') && displayMini.textContent.includes('=')){
                     displayMini.textContent = displayLarge.textContent
@@ -207,8 +207,9 @@ function keyboardSupport(){
                 }else{
                     divide((displayMini.textContent), (displayLarge.textContent))
                 }
-            }else if (displayMini.textContent.includes('x')){
-                if (displayMini.textContent.includes('x') && displayMini.textContent.includes('=')){
+            }else if (displayMini.textContent.includes('x') || (displayMini.textContent.includes('*'))){
+                if ((displayMini.textContent.includes('x') || (displayMini.textContent.includes('*')) 
+                && displayMini.textContent.includes('='))){
                     displayMini.textContent = displayLarge.textContent
                 }else{
                     multiply((displayLarge.textContent), displayMini.textContent)
@@ -220,7 +221,8 @@ function keyboardSupport(){
             modifyDisplayLarge(displayLarge.textContent.slice(0, -1)), newDigits.pop()
         }else if ((name == "=") || (code == 'Enter') || (code == 'NumpadEnter')){
             if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
-            (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
+            (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')) ||
+            (displayMini.textContent.includes('*')))){
             disableEquals()
         }else{
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
