@@ -1,7 +1,7 @@
 let operand = document.querySelectorAll('button');
+let newDigits = [].slice(0, 10)
 
 function buttonClick() {
-    let newDigits = [].slice(0, 10)
 for (const button of operand) {
     button.addEventListener('click', () => {
     if ((button.textContent == '1') || (button.textContent == '2') || (button.textContent == '3') || 
@@ -64,6 +64,13 @@ function modifyDisplayLarge(input) {
         input = input.slice(0, 10)
     }else{
         displayLarge.textContent = input
+    }
+}
+
+function disableEquals(){
+    for (const button of operand)
+    if (button.textContent == '='){
+        button.disabled = true
     }
 }
 
@@ -164,6 +171,67 @@ function operand2() {
     let operand2 = displayMini.textContent.charAt(displayMini.textContent.length - 3)
     console.log(operand2)
 }
+
+function keyboardSupport(){
+    document.addEventListener('keydown', (event) => {
+        let name = event.key;
+        let code = event.code;
+        console.log(`Key pressed ${name} \r\n Key code value: ${code}`)
+        if ((code == 'Numpad0') || (code == 'Numpad1') || (code == 'Numpad2') || (code == 'Numpad3') || 
+            (code == 'Numpad4') || (code == 'Numpad5') || (code == 'Numpad6') || (code == 'Numpad7') ||
+            (code == 'Numpad8') || (code == 'Numpad9') || (code == 'NumpadDecimal') || (name == '1') ||
+            (name == '2') || (name == '3') || (name == '4') || (name == '5') || (name == '6') || 
+            (name == '7') || (name == '8') || (name == '9') || (name == '0') || (code == 'Period')){
+            if (newDigits.includes('.')){
+                disableDecimal(), enableDelete()
+            }
+                newDigits.push(name), modifyDisplayLarge((newDigits.join('')).substring(0, 10)), 
+                console.log(newDigits), enableDelete() 
+        }else if ((code == "NumpadAdd") || (code == 'NumpadSubtract') || (code == 'Minus') || 
+            (code == 'NumpadMultiply') || (name == '*') || (name == '/') || (name == '+') ||
+            (code == 'NumpadDivide')){
+            if (displayMini.textContent.includes('+')){
+                if (displayMini.textContent.includes('+') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    add((displayLarge.textContent), (displayMini.textContent))
+                }
+            }else if (displayMini.textContent.includes('-')){
+                if (displayMini.textContent.includes('-') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    subtract((displayMini.textContent), displayLarge.textContent)
+                }
+            }else if (displayMini.textContent.includes('/')){
+                if (displayMini.textContent.includes('/') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    divide((displayMini.textContent), (displayLarge.textContent))
+                }
+            }else if (displayMini.textContent.includes('x')){
+                if (displayMini.textContent.includes('x') && displayMini.textContent.includes('=')){
+                    displayMini.textContent = displayLarge.textContent
+                }else{
+                    multiply((displayLarge.textContent), displayMini.textContent)
+                }
+            }
+            modifyDisplayMini(`${displayLarge.textContent} ${name}`), operand1(), operator(), 
+            newDigits = [], enableEquals(), enableDecimal(), disableDelete()
+        }else if ((name == 'Delete') || (name == 'Backspace')){
+            modifyDisplayLarge(displayLarge.textContent.slice(0, -1)), newDigits.pop()
+        }else if ((name == "=") || (code == 'Enter') || (code == 'NumpadEnter')){
+            if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
+            (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
+            //button.disabled = true
+        }else{
+        modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
+        newDigits = [], disableEquals(), enableDecimal(), disableDelete()
+        }
+        }
+    })
+}
+
+keyboardSupport()
 
 /*
 let operator = button.textContent
