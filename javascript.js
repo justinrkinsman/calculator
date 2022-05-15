@@ -142,8 +142,8 @@ function divide(operand1, operand2){
     if (operand2 == '0'){
         modifyDisplayLarge('lmao')
     }else{
-        modifyDisplayLarge((parseFloat(operand1) / parseFloat(operand2)))
-        //modifyDisplayLarge((Math.round(parseInt(operand1) / parseInt(operand2) * 100) / 100 ))
+        //modifyDisplayLarge((parseFloat(operand1) / parseFloat(operand2)))
+        modifyDisplayLarge((Math.round(parseFloat(operand1) / parseFloat(operand2) * 100) / 100 ))
     }
 }
 
@@ -176,7 +176,6 @@ function keyboardSupport(){
     document.addEventListener('keydown', (event) => {
         let name = event.key;
         let code = event.code;
-        console.log(`Key pressed ${name} \r\n Key code value: ${code}`)
         if ((code == 'Numpad0') || (code == 'Numpad1') || (code == 'Numpad2') || (code == 'Numpad3') || 
             (code == 'Numpad4') || (code == 'Numpad5') || (code == 'Numpad6') || (code == 'Numpad7') ||
             (code == 'Numpad8') || (code == 'Numpad9') || (code == 'NumpadDecimal') || (name == '1') ||
@@ -222,7 +221,7 @@ function keyboardSupport(){
         }else if ((name == "=") || (code == 'Enter') || (code == 'NumpadEnter')){
             if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
             (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
-            //button.disabled = true
+            disableEquals()
         }else{
         modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
         newDigits = [], disableEquals(), enableDecimal(), disableDelete()
@@ -230,6 +229,21 @@ function keyboardSupport(){
         }
     })
 }
+
+/*
+}else if ((button.textContent == '=')){
+        if (!(displayMini.textContent.includes('+') || (displayMini.textContent.includes('-')) || 
+            (displayMini.textContent.includes('/')) || (displayMini.textContent.includes('x')))){
+            button.disabled = true
+        }else{
+        modifyDisplayMini(`${displayMini.textContent} ${displayLarge.textContent} =`), operate(), operand2(), 
+        newDigits = [], button.disabled = true, enableDecimal(), disableDelete()
+        }
+    }else if (button.textContent == 'Delete'){
+        modifyDisplayLarge(displayLarge.textContent.slice(0, -1)), newDigits.pop()
+    }
+    })}}
+*/
 
 keyboardSupport()
 
